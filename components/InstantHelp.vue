@@ -2,7 +2,7 @@
   <div class="bg-gray-100">
     <section class="container max-w-7xl mx-auto px-2 sm:px-6 lg:px-8 py-10">
       <div class="grid grid-cols-7 gap-4">
-        <div class="col-span-3">
+        <div class="col-span-3 text-center">
           <span class="text-xl text-black">Request <span class="font-bold">Instant Help</span></span>
           <div class="px-5 py-5 bg-white rounded-md mt-3 leftbox">
             <textarea class="form-textarea mt-1 block w-full rounded-md outline-none bg-gray-100 px-1 py-1 border-2 border-gray-200" rows="3" placeholder="How can we help? Describe the problem..."></textarea>
@@ -33,7 +33,7 @@
             
           </div>
         </div>
-        <div class="col-span-4">
+        <div class="col-span-4 text-center">
           <span class="text-xl text-black">Expert <span class="font-bold">Responses</span></span>
           <div v-for="item in options" :key="item"  class="px-5 py-3 bg-white rounded-md mt-3 rightbox">
             <div class="text-left text-md text-black flex items-center justify-between">
