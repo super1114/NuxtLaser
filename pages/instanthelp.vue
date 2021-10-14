@@ -1,6 +1,6 @@
 <template>
     <div>
-        <Header />
+        <Header activeClass='instanthelp' />
         <InstantHelp />
     </div>
 </template>

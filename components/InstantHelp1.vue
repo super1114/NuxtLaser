@@ -15,7 +15,7 @@
               <span>Attach File</span>
               <span class="files"></span>
             </p>
-            <p class="text-left text-md mt-3 text-black">What kind of expert do you need?</p>
+            <p class="text-left text-md mt-3 text-black">What kind of software expert do you need?</p>
             <p class="mt-1 text-left">
               <multiselect
                 v-model="selected"
@@ -99,10 +99,5 @@ div.leftbox {
   0 6.7px 5.3px rgba(0, 0, 0, 0.048),
   0 12.5px 10px rgba(0, 0, 0, 0.06);
 }
-div.rightbox {
-  box-shadow:
-  0 2.8px 2.2px rgba(0, 0, 0, 0.034),
-  0 6.7px 5.3px rgba(0, 0, 0, 0.048),
-  0 12.5px 7px rgba(0, 0, 0, 0.06);
-}
+
 </style>
