@@ -1,17 +1,17 @@
 <template>
     <div>
-        <Header1 activeClass='instanthelp'/>
-        <InstantHelp1 />
+        <Header1 activeClass="login" />
+        <RegForm />
     </div>
 </template>
 
 <script>
 import Header1 from "../components/Header1"
-import InstantHelp1 from "../components/InstantHelp1"
+import RegForm from "../components/RegForm"
 export default {
     components: {
         Header1,
-        InstantHelp1
+        RegForm
     }
 }
 </script>

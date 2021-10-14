@@ -21,10 +21,10 @@
                     <div class="hidden sm:block sm:ml-6">
                         <div class="flex space-x-4 float-right">
                             <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
-                            <a href="#" class="text-black px-3 py-5 text-md font-bold border-b-2 border-yellow-500">GET INSTANT HELP</a>
+                            <a href="/" class="text-black px-3 py-5 text-md font-bold" :class="activeClass=='instanthelp'?'active_menu':''">GET INSTANT HELP</a>
 
-                            <a href="#" class="text-black px-3 py-5 text-md font-bold">HELP CLIENTS</a>
-                            <a href="#" class="text-black px-3 py-5 text-md font-bold">Login or Signup</a>
+                            <a href="/helpclients" class="text-black px-3 py-5 text-md font-bold" :class="activeClass=='helpclients'?'active_menu':''">HELP CLIENTS</a>
+                            <a href="/login" class="text-black px-3 py-5 text-md" :class="activeClass=='login'?'active_menu':''"><span class="font-bold">Login</span> or <span class="font-bold">Signup</span></a>
                         </div>
                     </div>
                 </div>
@@ -44,9 +44,19 @@
         </div>
     </nav>
 </template>
+<script>
 
+export default {
+    name:"LoginForm",
+    props:{
+        activeClass:String
+    }
+}
+</script>
 
 
 <style>
-
+    a.active_menu  {
+        border-bottom: 2px solid rgba(245, 158, 11, var(--tw-border-opacity));
+    }
 </style>
