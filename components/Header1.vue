@@ -15,16 +15,27 @@
                 </div>
                 <div class="flex-1 flex items-center justify-center sm:items-stretch sm:justify-between">
                     <div class="flex-shrink-0 flex items-center">
-                        <img class="block lg:hidden h-8 w-auto" src="https://tailwindui.com/img/logos/workflow-mark-indigo-500.svg" alt="Workflow">
+                        <img class="block lg:hidden h-8 w-auto" src="/_nuxt/assets/logo.png" alt="Workflow">
                         <img class="hidden lg:block h-12 w-auto" src="../assets/logo.png" alt="Workflow">
                     </div>
                     <div class="hidden sm:block sm:ml-6">
                         <div class="flex space-x-4 float-right">
+                            <div class="navbar-item has-dropdown is-hoverable" v-if="isAuthenticated">
+                                <a class="navbar-link">
+                                {{ loggedInUser.username }}
+                                </a>
+                                <div class="navbar-dropdown">
+                                    <a href="/" class="text-black px-3 py-5 text-md font-bold" :class="activeClass=='instanthelp'?'active_menu':''">GET INSTANT HELP</a>
+                                    <a href="/helpclients" class="text-black px-3 py-5 text-md font-bold" :class="activeClass=='helpclients'?'active_menu':''">HELP CLIENTS</a>
+                                    <hr class="navbar-divider"/>
+                                    <a class="navbar-item">Logout</a>
+                                </div>
+                            </div>
                             <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
                             <a href="/" class="text-black px-3 py-5 text-md font-bold" :class="activeClass=='instanthelp'?'active_menu':''">GET INSTANT HELP</a>
 
                             <a href="/helpclients" class="text-black px-3 py-5 text-md font-bold" :class="activeClass=='helpclients'?'active_menu':''">HELP CLIENTS</a>
-                            <a href="/login" class="text-black px-3 py-5 text-md" :class="activeClass=='login'?'active_menu':''"><span class="font-bold">Login</span> or <span class="font-bold">Signup</span></a>
+                            <a href="/login" class="text-black px-3 py-5 text-md" :class="activeClass=='login'?'active_menu':''"><span class="font-bold">Login</span> &nbsp;or&nbsp; <span class="font-bold">Signup</span></a>
                         </div>
                     </div>
                 </div>
@@ -45,8 +56,17 @@
     </nav>
 </template>
 <script>
+import { mapGetters } from 'vuex'
 
 export default {
+    computed: {
+        ...mapGetters(['isAuthencated', 'loggidInUser'])
+    },
+    data(){
+        return {
+            isAuthenticated:false,
+        }
+    },
     name:"LoginForm",
     props:{
         activeClass:String
