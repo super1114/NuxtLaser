@@ -31,5 +31,8 @@
     "tailwindcss",
     "nuxt",
     "nuxt-module"
-  ]
+  ],
+  "nuxt": {
+    "port": 8080
+   }
 }
