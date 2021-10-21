@@ -13,6 +13,26 @@ export default {
       // add '~tailwind.config` alias
       exposeConfig: true
     },
+    moduls: [
+      '@nuxtjs/axios',
+      '@nuxtjs/pwa',
+      '@nuxtjs/auth'
+    ],
+    axios: {
+      baseURL: 'http://192.168.114.110:3000/api'
+    },
+
+    auth: {
+      strategies: {
+        local: {
+          endpoints: {
+            login: {url: 'login', method: 'post', propertyName: 'data.token'},
+            user: {url: 'me', method: 'get', propertyName: 'data'},
+            logout: false
+          }
+        }
+      }
+    },
     head: {
       title: 'LaserHelp',
       meta: [

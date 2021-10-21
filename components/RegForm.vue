@@ -5,16 +5,29 @@
         <div class="col-start-3 col-span-3 text-center">
           <span class="text-xl text-black ">Sign up <span class="font-bold">LaserHelp</span></span>
           <div class="px-5 py-5 bg-white rounded-md mt-3 leftbox">
-            <p class="text-left text-md mt-3 text-black">Username</p>
-            <input type="text" placeholder="Enter your username" class="mt-1 px-1 py-1 focus:outline-none w-full rounded-md outline-none bg-gray-100 border-2 border-gray-200" />
-            <p class="text-left text-md mt-5 text-black">Password</p>
-            <input type="text" placeholder="Enter your password" class="mt-1 px-1 py-1 focus:outline-none w-full rounded-md outline-none bg-gray-100 border-2 border-gray-200" />
-            <div class="flex justify-center items-center">
-                <button class="mt-5 py-2 px-5 bg-yellow-600 text-gray-100 text-lg rounded-lg focus:border-4 border-yellow-300">Sign up</button>
-            </div>
-            <p class="mt-5 text-center">
-              Don't have account? &nbsp;<a class="underline text-blue-500 cursor-pointer" href="/signup"> Sign up</a>
-            </p>
+            
+            <Notification :message="error" v-if="error"/>
+              
+              <p class="text-left text-md mt-3 text-black">FirstName</p>
+              <input type="text" placeholder="Enter your username" name="firstname" v-model="firstname" class="mt-1 px-1 py-1 focus:outline-none w-full rounded-md outline-none bg-gray-100 border-2 border-gray-200" />
+              <p class="text-left text-md mt-3 text-black">LastName</p>
+              <input type="text" placeholder="Enter your username" name="lastname" v-model="lastname" class="mt-1 px-1 py-1 focus:outline-none w-full rounded-md outline-none bg-gray-100 border-2 border-gray-200" />
+              <p class="text-left text-md mt-5 text-black">Email</p>
+              <input type="email" placeholder="Enter your lastname" name="email" v-model="email" class="mt-1 px-1 py-1 focus:outline-none w-full rounded-md outline-none bg-gray-100 border-2 border-gray-200" />
+              <p class="text-left text-md mt-5 text-black">Password</p>
+              <input type="password" placeholder="Enter your password" name="password" v-model="password" class="mt-1 px-1 py-1 focus:outline-none w-full rounded-md outline-none bg-gray-100 border-2 border-gray-200" />
+              <p class="text-left text-md mt-5 text-black">Confirm</p>
+              <input type="password" placeholder="Confirm your password" name="password" v-model="confirm" class="mt-1 px-1 py-1 focus:outline-none w-full rounded-md outline-none bg-gray-100 border-2 border-gray-200" />
+              <p class="text-left text-md mt-3 text-black">PhoneNumber</p>
+              <input v-model="phone" type="number" placeholder="Enter your phonenumber" class="mt-1 px-1 py-1 focus:outline-none w-full rounded-md outline-none bg-gray-100 border-2 border-gray-200" />
+              <div class="flex justify-center items-center">
+                  <button class="mt-5 py-2 px-5 bg-yellow-600 text-gray-100 text-lg rounded-lg focus:border-4 border-yellow-300" @click="register">
+                    Sign up
+                  </button>
+              </div>
+              <p class="mt-5 text-center">
+                You have already account? &nbsp;<a class="underline text-blue-500 cursor-pointer" href="/login"> Log In</a>
+              </p>
           </div>
         </div>
       </div>
@@ -24,18 +37,26 @@
 
 <script>
 
+import Notification from './Notification.vue';
+import axios from "axios";
 
-//import 'vue-simple-accordion/dist/vue-simple-accordion.css';
 export default {
   name: 'InstantHelp1',
   components:{
+    Notification,
   },
-  computed: {
-    
+  computed: {    
   },
   data(){
     return {
-      checked: false
+      checked: false,
+      firstname: '',
+      lastname: '',
+      email: '',
+      password: '',
+      confirm: '',
+      phone: '',
+      error: null
     }
   },
 
@@ -43,7 +64,25 @@ export default {
     
   },
   methods:{
-    
+    async register() {
+      try {
+        const { data } = await axios.post('http://localhost:3030/api/signup', {
+          firstname: this.firstname,
+          lastname: this.lastname,
+          email: this.email,
+          password: this.password,
+          confirm: this.confirm,
+          phone: this.phone
+        }); 
+        if(data.status) {
+          document.location="/login";
+        }else {
+          alert("Please confirm your password!");
+        }
+      } catch (e) {
+        console.log("error");
+      }
+    }
   }
 }
 </script>

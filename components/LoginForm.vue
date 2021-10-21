@@ -5,16 +5,16 @@
         <div class="col-start-3 col-span-3 text-center">
           <span class="text-xl text-black ">Login to <span class="font-bold">LaserHelp</span></span>
           <div class="px-5 py-5 bg-white rounded-md mt-3 leftbox">
-            <p class="text-left text-md mt-3 text-black">Username</p>
-            <input type="text" placeholder="Enter your username" class="mt-1 px-1 py-1 focus:outline-none w-full rounded-md outline-none bg-gray-100 border-2 border-gray-200" />
+            <p class="text-left text-md mt-3 text-black">Email</p>
+            <input type="email" placeholder="Enter your email" v-model="email" class="mt-1 px-1 py-1 focus:outline-none w-full rounded-md outline-none bg-gray-100 border-2 border-gray-200" />
             <p class="text-left text-md mt-5 text-black">Password</p>
-            <input type="text" placeholder="Enter your password" class="mt-1 px-1 py-1 focus:outline-none w-full rounded-md outline-none bg-gray-100 border-2 border-gray-200" />
+            <input type="password" placeholder="Enter your password" v-model="password" class="mt-1 px-1 py-1 focus:outline-none w-full rounded-md outline-none bg-gray-100 border-2 border-gray-200" />
             <p class="mt-5 text-left">
               <input type="checkbox" id="checkbox" v-model="checked">
               <label for="checkbox" class="text-black">&nbsp; Remember me</label>
             </p>
             <div class="flex justify-center items-center">
-                <button class="mt-5 py-2 px-5 bg-yellow-600 text-gray-100 text-lg rounded-lg focus:border-4 border-yellow-300">Login</button>
+                <button class="mt-5 py-2 px-5 bg-yellow-600 text-gray-100 text-lg rounded-lg focus:border-4 border-yellow-300" @click="login">Login</button>
             </div>
             <p class="mt-5 text-center">
               Don't have account? &nbsp;<a class="underline text-blue-500 cursor-pointer" href="/signup"> Sign up</a>
@@ -28,18 +28,23 @@
 
 <script>
 
+import axios from 'axios';
+import Notification from './Notification.vue';
 
-//import 'vue-simple-accordion/dist/vue-simple-accordion.css';
+
 export default {
   name: 'InstantHelp1',
   components:{
-  },
+    Notification,
+},
   computed: {
     
   },
   data(){
     return {
-      checked: false
+      checked: false,
+      email: '',
+      password: ''
     }
   },
 
@@ -47,7 +52,22 @@ export default {
     
   },
   methods:{
-    
+    async login() {
+      try {
+        console.log("kdkdkkd");
+        const { data } = await axios.post('http://localhost:3030/api/login', {
+          email: this.email,
+          password: this.password
+        });
+        if(data.status){
+          document.location="/instanthelp";
+        }else {
+          alert("login failed");
+        }
+      } catch (e) {
+        console.log("error");
+      }
+    }
   }
 }
 </script>
