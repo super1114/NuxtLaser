@@ -5,16 +5,22 @@
         <div class="col-span-3 text-center">
           <span class="text-xl text-black">Request <span class="font-bold">Instant Help</span></span>
           <div class="px-5 py-5 bg-white rounded-md mt-3 leftbox">
-            <textarea class="form-textarea mt-1 block w-full rounded-md outline-none bg-gray-100 px-1 py-1 border-2 border-gray-200" rows="3" placeholder="How can we help? Describe the problem..."></textarea>
+            <textarea v-model="question" class="form-textarea mt-1 block w-full rounded-md outline-none bg-gray-100 px-1 py-1 border-2 border-gray-200" rows="3" placeholder="How can we help? Describe the problem..."></textarea>
             <p class="text-left text-md mt-3 text-black">Use <a href="http://www.loom.com" target="_blank" class="text-blue-600">Loom.com</a> to easily screen record your question.</p>
-            <input type="text" placeholder="Paste a link to your loom screen record...(optional)" class="mt-1 px-1 py-1 focus:outline-none w-full rounded-md outline-none bg-gray-100 border-2 border-gray-200" />
-            <p class="text-left text-md mt-4 font-bold flex">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13" />
-              </svg>
-              <span>Attach File</span>
-              <span class="files"></span>
-            </p>
+            <input v-model="loom" type="text" placeholder="Paste a link to your loom screen record...(optional)" class="mt-1 px-1 py-1 focus:outline-none w-full rounded-md outline-none bg-gray-100 border-2 border-gray-200" />
+            <div class="mt-4 flex items-center justify-between">
+              <div class="text-left text-md font-bold flex">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13" />  
+                </svg>
+                <label>Attach File
+                  <input style="display: none" type="file" id="file" ref="file" @change="handleFileUpload"/>
+                </label>
+              </div>
+              <div>
+                <span class="float-right font-bold">{{ filename }}</span>
+              </div>
+            </div>
             <p class="text-left text-md mt-3 text-black">What kind of expert do you need?</p>
             <p class="mt-1 text-left">
               <multiselect
@@ -28,25 +34,25 @@
               <label for="checkbox" class="text-black"> Make this post to reach more experts.</label>
             </p>
             <div class="flex justify-center items-center">
-                <button class="mt-5 py-2 px-5 bg-yellow-600 text-gray-100 text-lg rounded-lg focus:border-4 border-yellow-300">Request Instant Help</button>
+                <button class="mt-5 py-2 px-5 bg-yellow-600 text-gray-100 text-lg rounded-lg focus:border-4 border-yellow-300" @click="submitQuestion">Request Instant Help</button>
             </div>
             
           </div>
         </div>
         <div class="col-span-4 text-center">
           <span class="text-xl text-black">Expert <span class="font-bold">Responses</span></span>
-          <div v-for="item in options" :key="item"  class="px-5 py-3 bg-white rounded-md mt-3 rightbox">
+          <div v-for="item in responses" :key="item.id"  class="px-5 py-3 bg-white rounded-md mt-3 rightbox">
             <div class="text-left text-md text-black flex items-center justify-between">
               <div>
-                <span class="text-md font-bold">Super Dev</span>
-                <span class="text-sm pl-2">5 minutes ago</span>
+                <span class="text-md font-bold">{{item.firstname + " " + item.lastname}}</span>
+                <span class="text-sm pl-2">{{getDiffTime(item.created_at)}}</span>
               </div>
               <div>
-                <a class="text-sm text-blue-500 underline" href="https://www.loom.com" target="_blank">Loom link</a>
-                <a class="text-sm pl-3 underline"  href="https://www.loom.com" target="_blank">2 Attached Files</a>
+                <a class="text-sm text-blue-500 underline" :href="item.loom" target="_blank">Loom link</a>
+                <a class="text-sm pl-3 underline"  :href="'http://localhost:3030/api/download/'+item.id" target="_blank">Attached File</a>
               </div>
               <div class="flex">
-                <span class="text-sm font-bold text-green-500">Public</span>
+                <span class="text-sm font-bold" :class="item.visibility=='true'?'text-green-500':'text-red-500'">{{item.visibility=="true"?"Public":"Private"}}</span>
                 <span class="text-sm font-bold pl-2 flex cursor-pointer">
                   <span>Edit</span> 
                   <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
@@ -56,7 +62,7 @@
               </div>
             </div>
             <div class="text-sm text-black text-left">
-              Hi. How are you everyone? Can you join zoom? Have a good day.
+              {{item.question}}
             </div>
             <vsa-list :init-active="false" :auto-collapse="true">
               <vsa-item>
@@ -155,7 +161,9 @@ import {
   VsaHeading,
   VsaContent,
 } from 'vue-simple-accordion';
-//import 'vue-simple-accordion/dist/vue-simple-accordion.css';
+import axios from 'axios';
+import * as timeDifference from "time-difference-js";
+const { getTimeDiff } = timeDifference;
 export default {
   name: 'InstantHelp',
   components:{
@@ -172,15 +180,58 @@ export default {
     return {
       selected: null,
       options: ['After Effect', 'Video Editing', '3DMAX', 'Video Studio', 'Programming'],
-      checked: false
+      checked: false,
+      question: '',
+      loom: '',
+      file: {},
+      filename: "",
+      responses: []
     }
   },
 
-  created() {
-    
+  async created() {
+    await this.fetchResponses();
   },
   methods:{
-    
+    getDiffTime(created_at){  
+      var today = new Date();
+      var st = new Date(created_at);
+      return getTimeDiff(st, today).value+" "+getTimeDiff(st, today).suffix+" ago" ;
+    },
+    async fetchResponses() {
+      const { data } = await axios.get('http://localhost:3030/api/fetch_response');
+      if(data.status) {
+        this.responses = data.result;
+      }
+    },
+    async submitQuestion() {
+      let user_id = this.$store.state.localStorage.user.id;
+      console.log(user_id);
+      let formdata = new FormData();
+      formdata.append("loom", this.loom);
+      formdata.append("question", this.question);
+      formdata.append("file", this.file);
+      formdata.append("category", this.selected?this.selected.toString():"");
+      formdata.append("public", this.checked);
+      formdata.append("user_id", user_id);
+      if(this.question=="") { alert("Please enter the question content!"); return; } 
+      const { data } = await axios.post('http://localhost:3030/api/submit_question', 
+        formdata,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        }); 
+      if(data.status) {
+        document.location.reload();
+      }else {
+        alert("Request Help failed");
+      }
+    },
+    async handleFileUpload(){
+      this.file = this.$refs.file.files[0];
+      this.filename= this.file.name;
+    },
   }
 }
 </script>

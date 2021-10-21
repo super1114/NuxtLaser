@@ -1,7 +1,14 @@
 export const state = () => ({
-  my_custom_value: 0
+  questionId: 0,
+  user:{}
 })
 
 export const mutations = {
-  increase: state => state.my_custom_value++
+  setQuestionId(state, value) {
+    state.questionId = value;
+  },
+  setUser(state, user) {
+    console.log(user);
+    state.user = user;
+  }
 }

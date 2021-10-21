@@ -91,6 +91,7 @@ export default {
       formdata.append("file", this.file);
       formdata.append("category", this.selected?this.selected.toString():"");
       formdata.append("public", this.checked);
+      formdata.append("user_id", 0);
       if(this.question=="") { alert("Please enter the question content!"); return; } 
       const { data } = await axios.post('http://localhost:3030/api/submit_question', 
         formdata,
@@ -100,8 +101,8 @@ export default {
           }
         }); 
       if(data.status) {
-        this.$store.commit("localStorage/savequestion");
-        //document.location="/login";
+        this.$store.commit("localStorage/setQuestionId", data.questionId);
+        document.location="/login";
       }else {
         alert("Request Help failed");
       }
