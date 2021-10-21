@@ -214,4 +214,32 @@ div.rightbox {
   0 6.7px 5.3px rgba(0, 0, 0, 0.048),
   0 12.5px 7px rgba(0, 0, 0, 0.06);
 }
+.multiselect__option--highlight {
+    background: rgba(217, 119, 6, var(--tw-bg-opacity));;
+    outline: none;
+    color: #fff;
+}
+.multiselect__option--highlight:after {
+  background: rgba(217, 119, 6, var(--tw-bg-opacity));;
+  outline: none;
+  color: #fff;
+}
+
+.multiselect__tag {
+    background: rgba(217, 119, 6, var(--tw-bg-opacity));
+    outline: none;
+    color: #fff;
+}
+.multiselect__tag-icon:after {
+    content: "\D7";
+    background: rgba(217, 119, 6, var(--tw-bg-opacity));
+    color: white;
+    font-size: 14px;
+}
+.multiselect__tag-icon:hover {
+    content: "\D7";
+    background: rgba(217, 119, 6, var(--tw-bg-opacity));
+    color: white;
+    font-size: 14px;
+}
 </style>
