@@ -9,15 +9,19 @@
               <textarea class="form-textarea mt-1 block w-full rounded-md outline-none bg-gray-100 px-1 py-1 border-2 border-gray-200" rows="3" placeholder="How can we help? Describe the problem..." v-model="question"></textarea>
               <p class="text-left text-md mt-3 text-black">Use <a href="http://www.loom.com" target="_blank" class="text-blue-600">Loom.com</a> to easily screen record your question.</p>
               <input type="text" v-model="loom" placeholder="Paste a link to your loom screen record...(optional)" class="mt-1 px-1 py-1 focus:outline-none w-full rounded-md outline-none bg-gray-100 border-2 border-gray-200" />
-              <p class="text-left text-md mt-4 font-bold flex">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13" />
-                  
-                </svg>
-                <label @click="">Attach File
-                  <input style="display: none" type="file" id="file" ref="file" @change="handleFileUpload"/>
-                </label>
-              </p> 
+              <div class="mt-4 flex items-center justify-between">
+                <div class="text-left text-md font-bold flex">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13" />  
+                  </svg>
+                  <label>Attach File
+                    <input style="display: none" type="file" id="file" ref="file" @change="handleFileUpload"/>
+                  </label>
+                </div>
+                <div>
+                  <span class="float-right font-bold">{{ filename }}</span>
+                </div>
+              </div> 
               <input type="text" name="categories" id="categories" style="display: none;">
               <p class="text-left text-md mt-3 text-black">What kind of software expert do you need?</p>
               <p class="mt-1 text-left">
@@ -47,7 +51,6 @@
 import Multiselect from 'vue-multiselect'
 import axios from 'axios'
 
-
 import {
   VsaList,
   VsaItem,
@@ -73,12 +76,12 @@ export default {
       checked: false,
       question: '',
       loom: '',
-      file: {}
+      file: {},
+      filename: ""
     }
   },
 
   created() {
-    
   },
   methods:{
     async submitQuestion() {
@@ -86,28 +89,26 @@ export default {
       formdata.append("loom", this.loom);
       formdata.append("question", this.question);
       formdata.append("file", this.file);
-      console.log(formdata);
-      try {
-        
-        const { data } = await axios.post('http://localhost:3030/api/submit_question', 
-          formdata,
-          {
-            headers: {
-              'Content-Type': 'multipart/form-data'
-            }
-          }); 
-          console.log("dsfasdfdsfdsfdsfdsf",formdata);
-        if(data.status) {
-          document.location="/login";
-        }else {
-          alert("Please confirm your password!");
-        }
-      } catch (e) {
-        console.log("error");
+      formdata.append("category", this.selected?this.selected.toString():"");
+      formdata.append("public", this.checked);
+      if(this.question=="") { alert("Please enter the question content!"); return; } 
+      const { data } = await axios.post('http://localhost:3030/api/submit_question', 
+        formdata,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        }); 
+      if(data.status) {
+        this.$store.commit("localStorage/savequestion");
+        //document.location="/login";
+      }else {
+        alert("Request Help failed");
       }
     },
     async handleFileUpload(){
       this.file = this.$refs.file.files[0];
+      this.filename= this.file.name;
     },
   }
 }

@@ -8,6 +8,7 @@ export default {
       // Doc: https://github.com/nuxt-community/nuxt-tailwindcss
       "@nuxtjs/tailwindcss"
     ],
+
     tailwindcss: {
       jit: true,
       // add '~tailwind.config` alias
@@ -17,6 +18,12 @@ export default {
       '@nuxtjs/axios',
       '@nuxtjs/pwa',
       '@nuxtjs/auth'
+    ],
+    modules: [
+      ['nuxt-vuex-localstorage', {
+        mode: 'debug',
+        localStorage: ['localStorage']
+      }]
     ],
     axios: {
       baseURL: 'http://192.168.114.110:3000/api'

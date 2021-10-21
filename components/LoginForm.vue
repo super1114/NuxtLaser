@@ -1,11 +1,16 @@
 <template>
-  <div class="bg-gray-100">
-    <section class="container max-w-7xl mx-auto px-2 sm:px-6 lg:px-8 py-10">
+  <div class="bg-gray-100">{{$store.state.localStorage.status}}
+    <div v-show="$store.state.localStorage">
+      
+      {{$store.state.localStorage.my_custom_value}}
+      <button @click="$store.commit('localStorage/increase')">increase</button>
+    </div>
+    <!-- <section class="container max-w-7xl mx-auto px-2 sm:px-6 lg:px-8 py-10">
       <div class="grid grid-cols-7 gap-4 mt-10">
         <div class="col-start-3 col-span-3 text-center">
           <span class="text-xl text-black ">Login to <span class="font-bold">LaserHelp</span></span>
           <div class="px-5 py-5 bg-white rounded-md mt-3 leftbox">
-            <p class="text-left text-md mt-3 text-black">Email</p>
+            <p class="text-left text-md mt-3 text-black">{{$store.state.localStorage.questionId}}</p>
             <input type="email" placeholder="Enter your email" v-model="email" class="mt-1 px-1 py-1 focus:outline-none w-full rounded-md outline-none bg-gray-100 border-2 border-gray-200" />
             <p class="text-left text-md mt-5 text-black">Password</p>
             <input type="password" placeholder="Enter your password" v-model="password" class="mt-1 px-1 py-1 focus:outline-none w-full rounded-md outline-none bg-gray-100 border-2 border-gray-200" />
@@ -22,7 +27,8 @@
           </div>
         </div>
       </div>
-    </section>
+    </section> -->
+    
   </div>
 </template>
 
@@ -53,20 +59,21 @@ export default {
   },
   methods:{
     async login() {
-      try {
-        console.log("kdkdkkd");
-        const { data } = await axios.post('http://localhost:3030/api/login', {
-          email: this.email,
-          password: this.password
-        });
-        if(data.status){
-          document.location="/instanthelp";
-        }else {
-          alert("login failed");
-        }
-      } catch (e) {
-        console.log("error");
-      }
+      console.log(this.$store.state.localStorage.questionId);
+    //   try {
+    //     console.log("kdkdkkd");
+    //     const { data } = await axios.post('http://localhost:3030/api/login', {
+    //       email: this.email,
+    //       password: this.password
+    //     });
+    //     if(data.status){
+    //       document.location="/instanthelp";
+    //     }else {
+    //       alert("login failed");
+    //     }
+    //   } catch (e) {
+    //     console.log("error");
+    //   }
     }
   }
 }
