@@ -54,7 +54,7 @@ export default {
   methods:{
     async login() {
       try {
-        console.log("444444444444444");
+        console.log("kdkdkkd");
         const { data } = await axios.post('http://localhost:3030/api/login', {
           email: this.email,
           password: this.password
