@@ -23,6 +23,7 @@
         </div>
       </div>
     </section>
+    
   </div>
 </template>
 
@@ -53,19 +54,18 @@ export default {
   },
   methods:{
     async login() {
-      try {
-        console.log("kdkdkkd");
-        const { data } = await axios.post('http://localhost:3030/api/login', {
-          email: this.email,
-          password: this.password
-        });
-        if(data.status){
-          document.location="/instanthelp";
-        }else {
-          alert("login failed");
-        }
-      } catch (e) {
-        console.log("error");
+      const questionId = this.$store.state.localStorage.questionId;
+      if(this.email==""||this.password=="") { alert("please enter your email or password"); return; }
+      const { data } = await axios.post('http://localhost:3030/api/login', {
+        email: this.email,
+        password: this.password,
+        questionId: questionId
+      });
+      if(data.status){
+        this.$store.commit("localStorage/setUser", data.result);
+        document.location = "/instanthelp";
+      }else {
+        alert("login failed");
       }
     }
   }
