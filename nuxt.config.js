@@ -1,3 +1,5 @@
+import path from 'path'
+import fs from 'fs'
 export default {
     // Auto-load components/
     components: true,
@@ -9,7 +11,11 @@ export default {
       "@nuxtjs/tailwindcss"
     ],
     server: {
-      port: 8000 // default: 3000
+      port: 8000, // default: 3000
+      https: {
+        key: fs.readFileSync(path.resolve(__dirname, 'cert/key.pem')),
+        cert: fs.readFileSync(path.resolve(__dirname, 'cert/cert.pem'))
+      }
     },
     tailwindcss: {
       jit: true,

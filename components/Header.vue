@@ -21,29 +21,18 @@
                     <div class="hidden sm:block sm:ml-6">
                         <div class="flex space-x-4 float-right">
                             <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
-                            <a href="#" class="text-black px-3 py-5 text-md font-bold border-b-2 border-yellow-500">GET INSTANT HELP</a>
+                            <a href="/instanthelp" class="text-black px-3 py-5 text-md font-bold" :class="activeClass=='instanthelp'?'active_menu':''">GET INSTANT HELP</a>
 
-                            <a href="#" class="text-black px-3 py-5 text-md font-bold">HELP CLIENTS</a>
+                            <a href="/helpclients" class="text-black px-3 py-5 text-md font-bold" :class="activeClass=='helpclients'?'active_menu':''">HELP CLIENTS</a>
 
                             <a href="#" class="text-black px-3 py-5 text-md font-medium">
                                 <img src="../assets/CHAT.png" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" alt="">
-                                <!-- <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
-                                </svg> -->
                             </a>
-
                             <a href="#" class="text-black px-3 py-5 text-md font-medium">
                                 <img src="../assets/NOTIFICATION .png" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" alt="">
-                                <!-- <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
-                                </svg> -->
                             </a>
                             <a href="#" class="text-black px-3 py-5 text-md font-medium">
                                 <img src="../assets/SETTINGS .png" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" alt="">
-                                <!-- <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                                </svg> -->
                             </a>
                         </div>
                     </div>
@@ -66,20 +55,35 @@
         <div class="sm:hidden" id="mobile-menu">
             <div class="px-2 pt-2 pb-3 space-y-1">
             <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
-            <a href="#" class="bg-gray-900 text-white block px-3 py-2 rounded-md text-base font-medium" aria-current="page">Dashboard</a>
+                <a href="#" class="bg-gray-900 text-white block px-3 py-2 rounded-md text-base font-medium" aria-current="page">GET INSTANT HELP</a>
 
-            <a href="#" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Team</a>
-
-            <a href="#" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Projects</a>
-
-            <a href="#" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Calendar</a>
+                <a href="#" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">HELP CLIENTS</a>
             </div>
         </div>
     </nav>
 </template>
 
+<script>
+import { mapGetters } from 'vuex'
 
+export default {
+    computed: {
+        ...mapGetters(['isAuthencated', 'loggidInUser'])
+    },
+    data(){
+        return {
+            isAuthenticated:false,
+        }
+    },
+    name:"Header",
+    props:{
+        activeClass:String
+    }
+}
+</script>
 
 <style>
-
+    a.active_menu  {
+        border-bottom: 2px solid rgba(245, 158, 11, var(--tw-border-opacity));
+    }
 </style>
