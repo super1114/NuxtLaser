@@ -67,7 +67,7 @@ export default {
             isAuthenticated:false,
         }
     },
-    name:"LoginForm",
+    name:"Header1",
     props:{
         activeClass:String
     }
