@@ -12,7 +12,7 @@
               <div class="mt-4 flex items-center justify-between">
                 <div class="text-left text-md font-bold flex">
                   <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13" />  
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13" />
                   </svg>
                   <label>Attach File
                     <input style="display: none" type="file" id="file" ref="file" @change="handleFileUpload"/>
@@ -21,7 +21,7 @@
                 <div>
                   <span class="float-right font-bold">{{ filename }}</span>
                 </div>
-              </div> 
+              </div>
               <input type="text" name="categories" id="categories" style="display: none;">
               <p class="text-left text-md mt-3 text-black">What kind of software expert do you need?</p>
               <p class="mt-1 text-left">
@@ -38,7 +38,7 @@
               <div class="flex justify-center items-center">
                   <button class="mt-5 py-2 px-5 bg-yellow-600 text-gray-100 text-lg rounded-lg focus:border-4 border-yellow-300" @click="submitQuestion">Request Instant Help</button>
               </div>
-            
+
           </div>
         </div>
       </div>
@@ -67,7 +67,7 @@ export default {
     VsaContent
   },
   computed: {
-   
+
   },
   data(){
     return {
@@ -92,14 +92,14 @@ export default {
       formdata.append("category", this.selected?this.selected.toString():"");
       formdata.append("public", this.checked);
       formdata.append("user_id", 0);
-      if(this.question=="") { alert("Please enter the question content!"); return; } 
-      const { data } = await axios.post('http://localhost:3030/api/submit_question', 
+      if(this.question=="") { alert("Please enter the question content!"); return; }
+      const { data } = await axios.post('http://localhost:3030/api/submit_question',
         formdata,
         {
           headers: {
             'Content-Type': 'multipart/form-data'
           }
-        }); 
+        });
       if(data.status) {
         this.$store.commit("localStorage/setQuestionId", data.questionId);
         document.location="/login";
