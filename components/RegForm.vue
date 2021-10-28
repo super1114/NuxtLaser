@@ -43,7 +43,7 @@ export default {
   components:{
     Notification,
   },
-  computed: {    
+  computed: {
   },
   data(){
     return {
@@ -59,7 +59,7 @@ export default {
   },
 
   created() {
-    
+
   },
   methods:{
     async register() {
@@ -77,14 +77,14 @@ export default {
         email: this.email,
         password: this.password,
         phone: this.phone
-      }); 
+      });
       if(data.status) {
         document.location="/login";
       }else {
         alert("Signup failed!");
         document.location.reload();
       }
-      
+
     }
   }
 }

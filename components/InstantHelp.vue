@@ -11,7 +11,7 @@
             <div class="mt-4 flex items-center justify-between">
               <div class="text-left text-md font-bold flex">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13" />  
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13" />
                 </svg>
                 <label>Attach File
                   <input style="display: none" type="file" id="file" ref="file" @change="handleFileUpload"/>
@@ -36,7 +36,7 @@
             <div class="flex justify-center items-center">
                 <button class="mt-5 py-2 px-5 bg-yellow-600 text-gray-100 text-lg rounded-lg focus:border-4 border-yellow-300" @click="submitQuestion">Request Instant Help</button>
             </div>
-            
+
           </div>
         </div>
         <div class="col-span-4 text-center">
@@ -54,7 +54,7 @@
               <div class="flex">
                 <span class="text-sm font-bold" :class="item.question.visibility=='true'?'text-green-500':'text-red-500'">{{item.question.visibility=="true"?"Public":"Private"}}</span>
                 <span class="text-sm font-bold pl-2 flex cursor-pointer">
-                  <span>Edit</span> 
+                  <span>Edit</span>
                   <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                     <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
                   </svg>
@@ -99,9 +99,12 @@
                         </div>
                       </div>
                       <div class="flex">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mx-1 cursor-pointer" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
-                        </svg>
+                        <div id="app">
+                          <svg xmlns="http://www.w3.org/2000/svg" @click="showModal" class="h-6 w-6 mx-1 cursor-pointer" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
+                          </svg>
+                          <Modal v-show="isModalVisible" @close="closeModal" />
+                        </div>
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mx-1 cursor-pointer" viewBox="0 0 20 20" fill="currentColor">
                           <path d="M17.924 2.617a.997.997 0 00-.215-.322l-.004-.004A.997.997 0 0017 2h-4a1 1 0 100 2h1.586l-3.293 3.293a1 1 0 001.414 1.414L16 5.414V7a1 1 0 102 0V3a.997.997 0 00-.076-.383z" />
                           <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z" />
@@ -116,7 +119,7 @@
               </vsa-item>
             </vsa-list>
           </div>
-          
+
         </div>
       </div>
     </section>
@@ -126,6 +129,8 @@
 <script>
 
 import Multiselect from 'vue-multiselect'
+import modal from './Modal'
+
 import {
   VsaList,
   VsaItem,
@@ -135,6 +140,7 @@ import {
 import axios from 'axios';
 import * as timeDifference from "time-difference-js";
 const { getTimeDiff } = timeDifference;
+
 export default {
   name: 'InstantHelp',
   components:{
@@ -142,10 +148,11 @@ export default {
     VsaList,
     VsaItem,
     VsaHeading,
-    VsaContent
+    VsaContent,
+    Modal
   },
   computed: {
-    
+
   },
   data(){
     return {
@@ -157,7 +164,8 @@ export default {
       file: {},
       filename: "",
       responses: [],
-      curReply:""
+      curReply:"",
+      isModalVisible: false
     }
   },
 
@@ -165,6 +173,14 @@ export default {
     await this.fetchResponses();
   },
   methods:{
+    showModal() {
+      this.isModalVisible = true;
+    },
+
+    closeModal() {
+      this.isModalVisible = false;
+    },
+
     async submitReply(id){
       let user_id = this.$store.state.localStorage.user.id;
       const { data } = await axios.post('http://localhost:3030/api/submitResponse', {
@@ -176,7 +192,7 @@ export default {
         document.location.reload();
       }
     },
-    getDiffTime(created_at){  
+    getDiffTime(created_at){
       var today = new Date();
       var st = new Date(created_at);
       return getTimeDiff(st, today).value+" "+getTimeDiff(st, today).suffix+" ago" ;
@@ -197,14 +213,14 @@ export default {
       formdata.append("category", this.selected?this.selected.toString():"");
       formdata.append("public", this.checked);
       formdata.append("user_id", user_id);
-      if(this.question=="") { alert("Please enter the question content!"); return; } 
+      if(this.question=="") { alert("Please enter the question content!"); return; }
       const { data } = await axios.post('http://localhost:3030/api/submit_question',
         formdata,
         {
           headers: {
             'Content-Type': 'multipart/form-data'
           }
-        }); 
+        });
       if(data.status) {
         document.location.reload();
       }else {

@@ -23,7 +23,7 @@
         </div>
       </div>
     </section>
-    
+
   </div>
 </template>
 
@@ -39,7 +39,7 @@ export default {
     Notification,
 },
   computed: {
-    
+
   },
   data(){
     return {
@@ -50,7 +50,7 @@ export default {
   },
 
   created() {
-    
+
   },
   methods:{
     async login() {

@@ -1,17 +1,19 @@
 <template>
     <div>
-        <Header activeClass='instanthelp' />
-        <InstantHelp />
+        <Header activeClass='message' />
+        <Message />
     </div>
 </template>
 
 <script>
 import Header from "../components/Header"
-import InstantHelp from "../components/InstantHelp"
+import Message from "../components/Message"
+
+
 export default {
     components: {
-        Header,
-        InstantHelp
+        Header: Header,
+        Message: Message
     }
 }
 </script>

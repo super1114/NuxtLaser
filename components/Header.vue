@@ -15,19 +15,23 @@
                 </div>
                 <div class="flex-1 flex items-center justify-center sm:items-stretch sm:justify-between">
                     <div class="flex-shrink-0 flex items-center">
-                        <img class="block lg:hidden h-8 w-auto" src="https://tailwindui.com/img/logos/workflow-mark-indigo-500.svg" alt="Workflow">
+                        <img class="block lg:hidden h-8 w-auto" src="/_nuxt/assets/logo.png" alt="Workflow">
                         <img class="hidden lg:block h-12 w-auto" src="../assets/logo.png" alt="Workflow">
+                        <!-- <img class="block lg:hidden h-8 w-auto" src="https://tailwindui.com/img/logos/workflow-mark-indigo-500.svg" alt="Workflow">
+
+                        <img class="hidden lg:block h-12 w-auto" src="../assets/logo.png" alt="Workflow"> -->
                     </div>
                     <div class="hidden sm:block sm:ml-6">
                         <div class="flex space-x-4 float-right">
                             <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
-                            <a href="/instanthelp" class="text-black px-3 py-5 text-md font-bold" :class="activeClass=='instanthelp'?'active_menu':''">GET INSTANT HELP</a>
+                            <a href="#" class="text-black px-3 py-6 text-md font-bold border-b-3 border-yellow-500">GET INSTANT HELP</a>
 
-                            <a href="/helpclients" class="text-black px-3 py-5 text-md font-bold" :class="activeClass=='helpclients'?'active_menu':''">HELP CLIENTS</a>
+                            <a href="#" class="text-black px-3 py-5 text-md font-bold">HELP CLIENTS</a>
 
-                            <a href="#" class="text-black px-3 py-5 text-md font-medium">
+                            <a href="/message" class="text-black px-3 py-5 text-md font-medium" :class="activeClass=='message'?'active_menu':''">
                                 <img src="../assets/CHAT.png" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" alt="">
                             </a>
+
                             <a href="#" class="text-black px-3 py-5 text-md font-medium">
                                 <img src="../assets/NOTIFICATION .png" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" alt="">
                             </a>
@@ -55,35 +59,29 @@
         <div class="sm:hidden" id="mobile-menu">
             <div class="px-2 pt-2 pb-3 space-y-1">
             <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
-                <a href="#" class="bg-gray-900 text-white block px-3 py-2 rounded-md text-base font-medium" aria-current="page">GET INSTANT HELP</a>
+            <a href="#" class="bg-gray-900 text-white block px-3 py-2 rounded-md text-base font-medium" aria-current="page">Dashboard</a>
 
-                <a href="#" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">HELP CLIENTS</a>
+            <a href="#" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Team</a>
+
+            <a href="#" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Projects</a>
+
+            <a href="#" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Calendar</a>
             </div>
         </div>
     </nav>
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
-
 export default {
-    computed: {
-        ...mapGetters(['isAuthencated', 'loggidInUser'])
-    },
-    data(){
-        return {
-            isAuthenticated:false,
-        }
-    },
-    name:"Header",
-    props:{
-        activeClass:String
-    }
+  props: {
+    activeClass: String
+  }
 }
 </script>
 
+
 <style>
-    a.active_menu  {
-        border-bottom: 2px solid rgba(245, 158, 11, var(--tw-border-opacity));
+  a.active_menu  {
+        border-bottom: -2px solid rgba(245, 158, 11, var(--tw-border-opacity));
     }
 </style>
