@@ -1,53 +1,62 @@
-<template>
-  <div class="modal-backdrop">
-    <div class="modal">
-      <header class="modal-header">
-        <slot name="header">
-          This is the default title!
-        </slot>
-        <button
-          type="button"
-          class="btn-close"
-          @click="close"
-        >
-          x
-        </button>
-      </header>
-
-      <section class="modal-body">
-        <slot name="body">
-          This is the default body!
-        </slot>
-       </section>
-
-      <footer class="modal-footer">
-        <slot name="footer">
-          This is the default footer!
-        </slot>
-        <button
-          type="button"
-          class="btn-green"
-          @click="close"
-        >
-          Close Modal
-        </button>
-      </footer>
-    </div>
-  </div>
-</template>
-
 <script>
-import Modal from 'vue-js-modal'
-
   export default {
     name: 'Modal',
     methods: {
       close() {
         this.$emit('close');
       },
+      gotochat() {
+        document.location = "/message";
+      }
     },
   };
 </script>
+
+<template>
+  <transition name="modal-fade z-50">
+    <div class="modal-backdrop" style="z-index:1000">
+      <div class="modal"
+        role="dialog"
+        aria-labelledby="modalTitle"
+        aria-describedby="modalDescription"
+      >
+        <header
+          class="modal-header"
+          id="modalTitle"
+        >
+          Begin 20 mins live chat with Lendon for $10
+        </header>
+
+        <section
+          class="modal-body"
+          id="modalDescription"
+        >
+          You will not be charged if Lendon doesn't answer the call immediately.
+          <br />
+          You can get a 50% refund if you are not satisfied with Lendon's service.
+        </section>
+
+        <footer class="modal-footer flex justify-around items-center flex-row">
+          <button
+            type="button"
+            class="font-bold"
+            @click="gotochat"
+          >
+            Next
+          </button>
+          <button
+            type="button"
+            class=""
+            @click="close"
+            aria-label="Close modal"
+          >
+            Close
+          </button>
+        </footer>
+      </div>
+    </div>
+  </transition>
+</template>
 
 <style>
   .modal-backdrop {
@@ -68,30 +77,32 @@ import Modal from 'vue-js-modal'
     overflow-x: auto;
     display: flex;
     flex-direction: column;
+    padding: 10px;
   }
 
   .modal-header,
   .modal-footer {
-    padding: 15px;
+    padding: 5px;
     display: flex;
   }
 
   .modal-header {
     position: relative;
     border-bottom: 1px solid #eeeeee;
-    color: #4AAE9B;
+    color: black;
+    font-size: 20px;
+    font-weight: bold;
     justify-content: space-between;
   }
 
   .modal-footer {
     border-top: 1px solid #eeeeee;
-    flex-direction: column;
-    justify-content: flex-end;
+    flex-direction: row;
   }
 
   .modal-body {
     position: relative;
-    padding: 20px 10px;
+    padding: 10px 10px;
   }
 
   .btn-close {
@@ -112,5 +123,15 @@ import Modal from 'vue-js-modal'
     background: #4AAE9B;
     border: 1px solid #4AAE9B;
     border-radius: 2px;
+  }
+
+  .modal-fade-enter,
+  .modal-fade-leave-to {
+    opacity: 0;
+  }
+
+  .modal-fade-enter-active,
+  .modal-fade-leave-active {
+    transition: opacity .5s ease;
   }
 </style>
