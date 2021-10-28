@@ -1,5 +1,10 @@
 <template>
   <div class="bg-gray-100">
+    <Modal
+      v-show="isModalVisible"
+      @close="closeModal"
+    >
+    </Modal>
     <section class="container max-w-7xl mx-auto px-2 sm:px-6 lg:px-8 py-10">
       <div class="grid grid-cols-7 gap-4">
         <div class="col-span-3 text-center">
@@ -103,7 +108,6 @@
                           <svg xmlns="http://www.w3.org/2000/svg" @click="showModal" class="h-6 w-6 mx-1 cursor-pointer" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
                           </svg>
-                          <Modal v-show="isModalVisible" @close="closeModal" />
                         </div>
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mx-1 cursor-pointer" viewBox="0 0 20 20" fill="currentColor">
                           <path d="M17.924 2.617a.997.997 0 00-.215-.322l-.004-.004A.997.997 0 0017 2h-4a1 1 0 100 2h1.586l-3.293 3.293a1 1 0 001.414 1.414L16 5.414V7a1 1 0 102 0V3a.997.997 0 00-.076-.383z" />
@@ -129,7 +133,7 @@
 <script>
 
 import Multiselect from 'vue-multiselect'
-import modal from './Modal'
+import Modal from './Modal'
 
 import {
   VsaList,
