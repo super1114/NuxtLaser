@@ -12,10 +12,10 @@ export default {
     ],
     server: {
       port: 8000, // default: 3000
-      https: {
-        key: fs.readFileSync(path.resolve(__dirname, 'cert/key.pem')),
-        cert: fs.readFileSync(path.resolve(__dirname, 'cert/cert.pem'))
-      }
+      // https: {
+      //   key: fs.readFileSync(path.resolve(__dirname, 'cert/key.pem')),
+      //   cert: fs.readFileSync(path.resolve(__dirname, 'cert/cert.pem'))
+      // }
     },
     tailwindcss: {
       jit: true,
