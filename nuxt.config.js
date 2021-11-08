@@ -27,7 +27,32 @@ export default {
       ['nuxt-vuex-localstorage', {
         mode: 'debug',
         localStorage: ['localStorage']
-      }]
+      }],
+      [
+        '@nuxtjs/firebase',
+        {
+          config: {
+            apiKey: 'AIzaSyDNiD3a2zEf4CEJ7t2ZdmubpDPm_spvaJY',
+            authDomain: 'laserhelp-3b97d.firebaseapp.com',
+            projectId: 'laserhelp-3b97d',
+            storageBucket: 'laserhelp-3b97d.appspot.com',
+            messagingSenderId: '324228295969',
+            appId: '1:324228295969:web:dc6f8d38425b7dd745a260',
+            measurementId: 'G-WMKQSDM32P'
+          },
+          services: {
+            auth: true,
+            firestore: true,
+            functions: true,
+            storage: true,
+            database: true,
+            messaging: true,
+            performance: true,
+            analytics: true,
+            remoteConfig: true
+          }
+        }
+      ]
     ],
     
     auth: {

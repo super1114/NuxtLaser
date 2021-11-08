@@ -11,8 +11,8 @@
         </div>
         <div class="flex  mt-3 px-3 justify-between items-center bg-gray-200 cursor-pointer">
           <div class="flex items-center py-2">
-            <img src="../assets/myphoto.jpg" alt="" class="rounded-full w-8">
-            <p class="mx-2">Lendon Bracewell</p>
+            <img src="../assets/avatar.jpg" alt="" class="rounded-full w-8">
+            <p class="mx-2">{{receiver.firstname + " "+receiver.lastname}}</p>
           </div>
           <p class="text-sm text-gray-700">10:16 PM</p>
         </div>
@@ -21,21 +21,14 @@
       <div class="col-start-3 col-end-6 bg-white mt-4 rounded-md" :class="is_shown?'':'large_side'">
         <div class="flex justify-between px-3 items-center pt-3">
           <div class="text-center">
-            <span class="text-2xl font-bold text-center">Lendon Bracewell</span>
-            <!-- <span class="w-2 h-2 bg-green-500 rounded-full inline-block mx-2"></span> -->
+            <span class="text-2xl font-bold text-center">{{receiver.firstname + " " + receiver.lastname}}</span>
           </div>
           <div class="flex justify-center items-center">
             <div class="cursor-pointer mr-4">
               <img src="../assets/CHAT.png" class="w-6" />
-              <!-- <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
-              </svg> -->
             </div>
             <div class="cursor-pointer justify-center items-center">
               <img src="../assets/PHONE.png" class="w-6" />
-              <!-- <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 3h5m0 0v5m0-5l-6 6M5 3a2 2 0 00-2 2v1c0 8.284 6.716 15 15 15h1a2 2 0 002-2v-3.28a1 1 0 00-.684-.948l-4.493-1.498a1 1 0 00-1.21.502l-1.13 2.257a11.042 11.042 0 01-5.516-5.517l2.257-1.128a1 1 0 00.502-1.21L9.228 3.683A1 1 0 008.279 3H5z" />
-              </svg> -->
             </div>
           </div>
         </div>
@@ -53,9 +46,6 @@
             <div class="border-2 border-gray-500 mx-2 rounded-md cursor-pointer">
               <div class="flex justify-between px-4 py-1 items-center">
                 <span class="pr-2 text-md">Begin the Call</span>
-                <!-- <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 3h5m0 0v5m0-5l-6 6M5 3a2 2 0 00-2 2v1c0 8.284 6.716 15 15 15h1a2 2 0 002-2v-3.28a1 1 0 00-.684-.948l-4.493-1.498a1 1 0 00-1.21.502l-1.13 2.257a11.042 11.042 0 01-5.516-5.517l2.257-1.128a1 1 0 00.502-1.21L9.228 3.683A1 1 0 008.279 3H5z" />
-                </svg> -->
                 <img src="../assets/PHONE.png" class="h-6" />
               </div>
             </div>
@@ -64,26 +54,18 @@
               <div class="flex justify-between px-4 py-1 items-center">
                 <span class="pr-2 text-md">Begin the Chat</span>
                 <img src="../assets/CHAT.png" class="h-6" />
-                <!-- <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
-                </svg> -->
               </div>
             </div>
           </div>
         </div>
         <div style="height:600px">
-          <p v-for="item in messages" :key="item" class="text-right mt-2 px-4 py-2 ">
-            <span class="bg-gray-400 px-4 py-2 rounded-md">
-              {{item}}
-            </span>
-          </p>
+          <div v-for="item in messages" :key="item" class="w-8/12 mt-2 px-2 py-2 rounded-md" :class="item.type=='send'?'bg-yellow-200 float-right text-right':'bg-blue-200 float-left text-left'">
+              {{ item.message }}
+          </div>
         </div>
         <div class="flex mx-4 my-3 justify-between items-center">
-          <input type="text" v-model="curMsg" class="font-xs border-2 border-gray-300 w-full rounded-md h-10 bg-gray-100 focus:outline-none" placeholder="Call Lendon or begin Live Chatting to continue the conversation.">
-          <img src="../assets/send.png" class="w-8 h-8" />
-          <!-- <svg @click="sendMsg" xmlns="http://www.w3.org/2000/svg" class="transform rotate-90 mt-5 mx-3 h-8 w-8 cursor-pointer" fill="none" viewBox="0 0 24 24" stroke="currentColor" >
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
-          </svg> -->
+          <input type="text" v-model="curMsg" v-on:keyup.enter="sendMsg" class="font-xs border-2 border-gray-300 w-full rounded-md h-10 bg-gray-100 focus:outline-none" placeholder="Call Lendon or begin Live Chatting to continue the conversation.">
+          <img src="../assets/send.png" class="w-8 h-8" @click="sendMsg"/>
         </div>
       </div>
     </div>
@@ -91,13 +73,32 @@
 </template>
 
 <script>
+import axios from 'axios';
 export default {
   data(){
     return {
       is_shown: true,
       messages: [],
-      curMsg: ""
+      curMsg: "",
+      receiver: "null",
+      user: this.$store.state.localStorage.user,
+      recv_id: this.$route.params.id,
+      db:this.$fire.firestore
     }
+  },
+  async created() {
+    console.log(this.recv_id);
+    if(!this.user) this.$router.push("/login");
+    this.receiver = await (await axios.get('http://localhost:3030/api/user/'+this.recv_id)).data.result;
+    this.db.collection(this.user.id+"_"+this.recv_id).orderBy('id').onSnapshot((snapShot) => {
+      this.messages = [];
+      snapShot.forEach((doc) => {
+        this.messages.push(doc.data())
+      })
+      return {
+        
+      }
+    })
   },
   methods: {
     hide() {
@@ -108,7 +109,18 @@ export default {
     },
     sendMsg() {
       if(this.curMsg=="") return;
-      this.messages.push(this.curMsg);
+      let msg = {
+        id: Date.now(),
+        message: this.curMsg,
+        type:"send"
+      };
+      this.db.collection(this.user.id+"_"+this.recv_id).add(msg);
+      let msg1 = {
+        id: Date.now(),
+        message: this.curMsg,
+        type:"recv"
+      };
+      this.db.collection(this.recv_id+"_"+this.user.id).add(msg1);
       this.curMsg = "";
     }
   }

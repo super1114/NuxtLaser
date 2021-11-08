@@ -105,7 +105,7 @@
                       </div>
                       <div class="flex">
                         <div id="app">
-                          <img class="h-5 w-5 mr-2" src="../assets/CHAT.png" alt="">
+                          <a :href="'/message/'+reply.id"><img class="h-5 w-5 mr-2" src="../assets/CHAT.png" alt=""></a>
                         </div>
                         <div id="app">
                           <img class="h-5 w-5" src="../assets/PHONE.png" alt="">
